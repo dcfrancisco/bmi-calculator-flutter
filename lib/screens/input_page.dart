@@ -6,7 +6,6 @@ import '../constants.dart';
 import '../components/icon_content.dart';
 import '../components/reusable_card.dart';
 import '../components/round_icon_button.dart';
-import 'results_page.dart';
 
 enum Gender {
   male,
