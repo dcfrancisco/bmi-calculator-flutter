@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'constants.dart';
 import 'icon_content.dart';
+import 'results.dart';
 import 'reusable_card.dart';
+import 'round_icon_button.dart';
 
 enum Gender {
   male,
@@ -17,7 +19,9 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender = Gender.male;
-  int height = 170;
+  int height = 180;
+  int weight = 60;
+  int age = 25;
 
   @override
   Widget build(BuildContext context) {
@@ -95,15 +99,27 @@ class _InputPageState extends State<InputPage> {
                         ),
                       ],
                     ),
-                    Slider(
-                      value: height.toDouble(),
-                      min: 120.0,
-                      max: 220.0,
-                      activeColor: Color(0xFFEB1555),
-                      inactiveColor: Color(0xFF8D8E98),
-                      onChanged: (double newValue) {
-                        height = newValue.round();
-                      },
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        activeTrackColor: Colors.white,
+                        inactiveTrackColor: Color(0xFF8D8E98),
+                        thumbColor: Color(0xFFEB1555),
+                        overlayColor: Color(0x29EB1555),
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 30.0),
+                      ),
+                      child: Slider(
+                        value: height.toDouble(),
+                        min: 120.0,
+                        max: 220.0,
+                        onChanged: (double newValue) {
+                          setState(() {
+                            height = newValue.round();
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -117,13 +133,14 @@ class _InputPageState extends State<InputPage> {
                     child: ReusableCard(
                       color: kActiveCardColor,
                       cardChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'WEIGHT',
                             style: kLabelTextStyle,
                           ),
                           Text(
-                            '60',
+                            weight.toString(),
                             style: TextStyle(
                               fontSize: 50.0,
                               fontWeight: FontWeight.w900,
@@ -132,24 +149,24 @@ class _InputPageState extends State<InputPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              FloatingActionButton(
-                                onPressed: () {},
-                                backgroundColor: Color(0xFF4C4F5E),
-                                child: Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                ),
+                              RoundIconButton(
+                                icon: FontAwesomeIcons.plus,
+                                onPressed: () {
+                                  setState(() {
+                                    weight++;
+                                  });
+                                },
                               ),
                               SizedBox(
                                 width: 10.0,
                               ),
-                              FloatingActionButton(
-                                onPressed: () {},
-                                backgroundColor: Color(0xFF4C4F5E),
-                                child: Icon(
-                                  Icons.remove,
-                                  color: Colors.white,
-                                ),
+                              RoundIconButton(
+                                icon: FontAwesomeIcons.minus,
+                                onPressed: () {
+                                  setState(() {
+                                    weight--;
+                                  });
+                                },
                               ),
                             ],
                           ),
@@ -161,6 +178,7 @@ class _InputPageState extends State<InputPage> {
                     child: new ReusableCard(
                       color: kActiveCardColor,
                       cardChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'AGE',
@@ -170,7 +188,7 @@ class _InputPageState extends State<InputPage> {
                             ),
                           ),
                           Text(
-                            '25',
+                            age.toString(),
                             style: TextStyle(
                               fontSize: 50.0,
                               fontWeight: FontWeight.w900,
@@ -179,24 +197,24 @@ class _InputPageState extends State<InputPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              FloatingActionButton(
-                                onPressed: () {},
-                                backgroundColor: Color(0xFF4C4F5E),
-                                child: Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                ),
+                              RoundIconButton(
+                                icon: FontAwesomeIcons.plus,
+                                onPressed: () {
+                                  setState(() {
+                                    age++;
+                                  });
+                                },
                               ),
                               SizedBox(
                                 width: 10.0,
                               ),
-                              FloatingActionButton(
-                                onPressed: () {},
-                                backgroundColor: Color(0xFF4C4F5E),
-                                child: Icon(
-                                  Icons.remove,
-                                  color: Colors.white,
-                                ),
+                              RoundIconButton(
+                                icon: FontAwesomeIcons.minus,
+                                onPressed: () {
+                                  setState(() {
+                                    age--;
+                                  });
+                                },
                               ),
                             ],
                           ),
@@ -212,6 +230,20 @@ class _InputPageState extends State<InputPage> {
               margin: EdgeInsets.only(top: 10.0),
               width: double.infinity,
               height: kButtomContainerHeight,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/result');
+                },
+                child: Center(
+                  child: Text(
+                    'CALCULATE',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             )
           ],
         ));
